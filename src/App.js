@@ -1,6 +1,9 @@
 import { Component } from "react";
-import Dinosaurs from "./components/Dinosaurs";
+import { Route, Link, Routes } from "react-router-dom";
 import "./App.css";
+import Herbvores from "./components/Herbivores";
+import Carnivores from "./components/Carnivores";
+import Dinosaurs from "./components/Dinosaurs";
 
 class App extends Component {
   constructor() {
@@ -11,24 +14,48 @@ class App extends Component {
     };
   }
 
+  toggleHerbivores = () => {
+    this.setState({
+      herbivoresShown: !this.state.herbivoresShown,
+    });
+  };
+
+  toggleCarnivores = () => {
+    this.setState({
+      carnivoresShown: !this.state.carnivoresShown,
+    });
+  };
+
+  showALL = () => {
+    this.setState({
+      carnivoresShown: true,
+      herbivoresShown: true,
+    });
+  };
+
   render() {
+    const { herbivoresShown, carnivoresShown } = this.state;
     return (
       <div className="App">
         <h1>Dinosaurs! They're cool! I GUESS.</h1>
         <header>
           <ul>
             <li>
-              <a href="#">Herbivores</a>
+              <Link to="/herbivores">Herbivores</Link>
             </li>
             <li>
-              <a href="#">Carnivores</a>
+              <Link to="/carnivores">Carnivores</Link>
             </li>
             <li>
-              <a href="#">All</a>
+              <Link to="/">All</Link>
             </li>
           </ul>
         </header>
-        <Dinosaurs />
+        <Routes>
+          <Route exaect path="/" element={<Dinosaurs />} />
+          <Route path="/herbivores" element={<Herbvores />} />
+          <Route path="/carnivores" element={<Carnivores />} />
+        </Routes>
       </div>
     );
   }
